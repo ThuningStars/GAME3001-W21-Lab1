@@ -7,6 +7,7 @@
 #include "imgui_sdl.h"
 #include "Renderer.h"
 #include "Target.h"
+#include "Util.h"
 
 PlayScene::PlayScene()
 {
@@ -87,6 +88,18 @@ void PlayScene::GUI_Function() const
 	{
 		std::cout << "My Button Pressed" << std::endl;
 	}*/
+	static float speed = 10.0f;
+	if(ImGui::SliderFloat("MaxSpeed", &speed, 0.0f, 100.0f))
+	{
+		m_pSpaceShip->setMaxSpeed(speed);
+	}
+
+	static float angleInRadians = m_pSpaceShip->getRotation();
+	if(ImGui::SliderAngle("Orientation Angle", &angleInRadians))
+	{
+		m_pSpaceShip->setRotation(angleInRadians * Util::Rad2Deg);
+	}
+	
 	if (ImGui::Button("Start"))
 	{
 		m_pSpaceShip->setEnabled(true);
